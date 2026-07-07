@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flip Text - Play Store Banner</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #0a0a0f;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  .banner {
+    width: 1024px;
+    height: 500px;
+    background: linear-gradient(135deg, #0f0a2e 0%, #1a0a3e 20%, #2d1b69 50%, #1a0a3e 80%, #0f0a2e 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+  }
+
+  /* Animated gradient overlay */
+  .banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(0, 255, 200, 0.08) 0%, transparent 50%);
+    animation: rotate 15s linear infinite;
+  }
+
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Floating particles */
+  .particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute;
+    color: rgba(147, 51, 234, 0.2);
+    font-size: 24px;
+    font-weight: 900;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .particle:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; font-size: 20px; opacity: 0.3; }
+  .particle:nth-child(2) { top: 80%; left: 25%; animation-delay: -2s; font-size: 32px; opacity: 0.2; color: rgba(0, 255, 200, 0.2); }
+  .particle:nth-child(3) { top: 20%; left: 85%; animation-delay: -4s; font-size: 18px; opacity: 0.25; }
+  .particle:nth-child(4) { top: 70%; left: 90%; animation-delay: -6s; font-size: 28px; opacity: 0.15; color: rgba(0, 255, 200, 0.15); }
+  .particle:nth-child(5) { top: 50%; left: 5%; animation-delay: -3s; font-size: 22px; opacity: 0.2; }
+  .particle:nth-child(6) { top: 15%; left: 50%; animation-delay: -5s; font-size: 16px; opacity: 0.15; color: rgba(147, 51, 234, 0.15); }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+  }
+
+  /* Left side - Flip demo */
+  .demo-section {
+    flex: 1;
+    z-index: 1;
+    position: relative;
+  }
+
+  .demo-text {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 900;
+    font-size: 72px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .normal-text {
+    color: #ffffff;
+    text-shadow: 0 0 30px rgba(147, 51, 234, 0.5);
+    display: block;
+  }
+
+  .arrow-down {
+    display: block;
+    font-size: 36px;
+    color: rgba(0, 255, 200, 0.8);
+    margin: 4px 0;
+    text-shadow: 0 0 20px rgba(0, 255, 200, 0.4);
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  .flipped-text {
+    color: #00ffc8;
+    text-shadow: 0 0 40px rgba(0, 255, 200, 0.6), 0 0 80px rgba(0, 255, 200, 0.3);
+    display: block;
+  }
+
+  /* Glowing line separator */
+  .separator {
+    width: 2px;
+    height: 280px;
+    background: linear-gradient(to bottom, transparent, rgba(147, 51, 234, 0.6), rgba(0, 255, 200, 0.4), transparent);
+    z-index: 1;
+    margin: 0 40px;
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+  }
+
+  /* Right side - App info */
+  .info-section {
+    flex: 1;
+    z-index: 1;
+    text-align: left;
+  }
+
+  .app-name {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 900;
+    font-size: 56px;
+    background: linear-gradient(135deg, #a855f7 0%, #6366f1 40%, #00ffc8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+  }
+
+  .tagline {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 24px;
+    letter-spacing: 2px;
+  }
+
+  .features {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .feature-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, rgba(147, 51, 234, 0.3), rgba(0, 255, 200, 0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  /* Bottom decorative glow */
+  .glow-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, transparent, #a855f7, #00ffc8, transparent);
+    z-index: 1;
+  }
+
+  /* Top corner accents */
+  .corner-accent {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border: 1px solid rgba(147, 51, 234, 0.1);
+    z-index: 0;
+  }
+
+  .corner-accent-tl {
+    top: -50px;
+    left: -50px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(147, 51, 234, 0.08) 0%, transparent 70%);
+  }
+
+  .corner-accent-br {
+    bottom: -50px;
+    right: -50px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 255, 200, 0.06) 0%, transparent 70%);
+  }
+
+  /* Rating badge */
+  .rating-badge {
+    position: absolute;
+    bottom: 30px;
+    right: 50px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .stars {
+    color: #fbbf24;
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+  <div class="banner">
+    <div class="corner-accent corner-accent-tl"></div>
+    <div class="corner-accent corner-accent-br"></div>
+
+    <div class="particles">
+      <span class="particle">p</span>
+      <span class="particle">q</span>
+      <span class="particle">d</span>
+      <span class="particle">b</span>
+      <span class="particle">o</span>
+      <span class="particle">u</span>
+    </div>
+
+    <div class="demo-section">
+      <div class="demo-text">
+        <span class="normal-text">Hello</span>
+        <span class="arrow-down">▼</span>
+        <span class="flipped-text">olləH</span>
+      </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="info-section">
+      <div class="app-name">Flip Text</div>
+      <div class="tagline">Balikkan Teks Vertikal</div>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">✦</div>
+          Flip vertikal instan
+        </div>
+        <div class="feature">
+          <div class="feature-icon">✦</div>
+          Salin hasil 1 ketuk
+        </div>
+        <div class="feature">
+          <div class="feature-icon">✦</div>
+          Mode gelap otomatis
+        </div>
+        <div class="feature">
+          <div class="feature-icon">✦</div>
+          Desain Material You
+        </div>
+      </div>
+    </div>
+
+    <div class="rating-badge">
+      <span class="stars">★★★★★</span>
+    </div>
+
+    <div class="glow-bar"></div>
+  </div>
+</body>
+</html>
